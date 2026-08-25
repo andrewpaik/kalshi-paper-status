@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ladder watch — ladder logger</title><style>
+:root{--page:oklch(98.5% .001 286.376);--canvas:oklch(96.1% .002 247.84);--surface:oklch(100% 0 0);--inset:oklch(97.9% .002 247.839);
+--hover:oklch(97% .002 247.839);--ink:oklch(24.7% .006 258.361);--ink-2:oklch(50.6% .01 264.477);--ink-3:oklch(69.5% .009 264.505);
+--line:oklch(94.6% .003 264.542);--line-strong:oklch(91.2% .005 258.326);--field:oklch(96.1% .001 286.375);
+--stripe:oklch(40.5% 0 0/.075);--stripe-bg:oklch(97% 0 0);--accent:oklch(62.6% .205 254.947);--accent-ink:oklch(55.6% .187 255.617);
+--accent-tint:oklch(96% .019 252.878);--green:oklch(60.3% .155 150.883);--green-tint:oklch(95.8% .017 159.118);
+--orange:oklch(68.9% .179 49.902);--orange-tint:oklch(96.4% .021 67.581);--red:oklch(62.1% .192 23.042);--red-tint:oklch(95.6% .017 17.462);
+--shadow-hairline:0 0 0 1px var(--line);--shadow-card:0 0 0 1px var(--line),0 1px 2px oklch(0 0 0/.06),0 2px 6px oklch(0 0 0/.04);
+--shadow-raised:0 0 0 1px var(--line),0 2px 10px oklch(0 0 0/.10);--tooltip-bg:oklch(27.2% .008 264.435);--tooltip-fg:oklch(97.6% .002 247.839);
+--tooltip-muted:oklch(73.1% .008 260.731);--tooltip-border:oklch(35.6% .007 264.474);
+--radius-card:10px;--radius-control:8px;--mono:"JetBrains Mono","Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;color-scheme:light dark}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:oklch(20.9% .004 264.477);--canvas:oklch(23.1% .004 264.487);--surface:oklch(26% .006 271.191);
+--inset:oklch(24.3% .004 264.492);--hover:oklch(28.9% .006 271.22);--ink:oklch(96.4% .002 247.839);--ink-2:oklch(73.1% .008 260.731);
+--ink-3:oklch(54.1% .01 264.484);--line:oklch(30.8% .006 258.354);--line-strong:oklch(35.6% .007 264.474);--field:oklch(29.3% .006 271.223);
+--stripe:oklch(100% 0 0/.055);--stripe-bg:oklch(22.6% .004 264.485);--accent:oklch(68% .173 253.301);--accent-ink:oklch(78.8% .113 248.33);
+--accent-tint:oklch(68% .173 253.301/.16);--green:oklch(70.5% .154 153.814);--green-tint:oklch(70.5% .154 153.814/.14);
+--orange:oklch(74.6% .156 55.642);--orange-tint:oklch(74.6% .156 55.642/.14);--red:oklch(66.6% .18 21.433);--red-tint:oklch(66.6% .18 21.433/.14);
+--shadow-hairline:0 0 0 1px oklch(100% 0 0/.11);--shadow-card:0 0 0 1px oklch(100% 0 0/.11),0 1px 2px oklch(0 0 0/.2),0 2px 6px oklch(0 0 0/.2);
+--shadow-raised:0 0 0 1px oklch(100% 0 0/.13),0 2px 10px oklch(0 0 0/.30);--tooltip-bg:oklch(18.2% .004 264.459);--tooltip-fg:oklch(96.4% .002 247.839);
+--tooltip-muted:oklch(73.1% .008 260.731);--tooltip-border:oklch(30.8% .006 258.354)}}
+:root[data-theme="dark"]{--page:oklch(20.9% .004 264.477);--canvas:oklch(23.1% .004 264.487);--surface:oklch(26% .006 271.191);
+--inset:oklch(24.3% .004 264.492);--hover:oklch(28.9% .006 271.22);--ink:oklch(96.4% .002 247.839);--ink-2:oklch(73.1% .008 260.731);
+--ink-3:oklch(54.1% .01 264.484);--line:oklch(30.8% .006 258.354);--line-strong:oklch(35.6% .007 264.474);--field:oklch(29.3% .006 271.223);
+--stripe:oklch(100% 0 0/.055);--stripe-bg:oklch(22.6% .004 264.485);--accent:oklch(68% .173 253.301);--accent-ink:oklch(78.8% .113 248.33);
+--accent-tint:oklch(68% .173 253.301/.16);--green:oklch(70.5% .154 153.814);--green-tint:oklch(70.5% .154 153.814/.14);
+--orange:oklch(74.6% .156 55.642);--orange-tint:oklch(74.6% .156 55.642/.14);--red:oklch(66.6% .18 21.433);--red-tint:oklch(66.6% .18 21.433/.14);
+--shadow-hairline:0 0 0 1px oklch(100% 0 0/.11);--shadow-card:0 0 0 1px oklch(100% 0 0/.11),0 1px 2px oklch(0 0 0/.2),0 2px 6px oklch(0 0 0/.2);
+--shadow-raised:0 0 0 1px oklch(100% 0 0/.13),0 2px 10px oklch(0 0 0/.30);--tooltip-bg:oklch(18.2% .004 264.459);--tooltip-fg:oklch(96.4% .002 247.839);
+--tooltip-muted:oklch(73.1% .008 260.731);--tooltip-border:oklch(30.8% .006 258.354);color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+*{box-sizing:border-box}html{-webkit-font-smoothing:antialiased;text-rendering:optimizelegibility}
+body{margin:0;background:var(--stripe-bg);background-image:repeating-linear-gradient(-45deg,transparent 0,transparent 7px,var(--stripe) 7px,var(--stripe) 8px);
+background-attachment:fixed;color:var(--ink);font:14px/1.5 Inter,-apple-system,system-ui,"SF Pro Display","Helvetica Neue",sans-serif;letter-spacing:-.01em;font-feature-settings:"cv11","ss01"}
+.page{max-width:980px;margin:0 auto;padding:28px 20px 48px}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px 24px;padding-bottom:20px;border-bottom:1px dashed var(--line-strong)}
+h1{font-size:17px;font-weight:600;margin:0;letter-spacing:-.015em}.sub{margin:4px 0 0;font-size:12.5px;color:var(--ink-2);max-width:560px}
+.live{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.meta{font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;text-align:right}
+.meta b{color:var(--ink-2);font-weight:500}
+.pill{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font-size:11.5px;font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums}
+.theme{display:inline-flex;background:var(--field);border-radius:999px;padding:2px;gap:2px}
+.theme button{border:0;background:transparent;color:var(--ink-3);font:500 10.5px Inter,-apple-system,system-ui,sans-serif;padding:2px 9px;border-radius:999px;cursor:pointer;transition:background-color .14s,color .14s}
+.theme button:hover{color:var(--ink-2)}.theme button.on{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--line-strong)}
+.churn{display:inline-flex;align-items:center;gap:8px;height:22px}
+.churn .cgrid{display:grid;grid-template-columns:repeat(3,4px);grid-auto-rows:4px;gap:1.5px;flex:0 0 auto}
+.churn .cgrid i{width:4px;height:4px;border-radius:1px;background:var(--ink);animation:churn 1.15s ease-in-out infinite}
+.churn .cgrid i:nth-child(1){animation-delay:0s}.churn .cgrid i:nth-child(2){animation-delay:.12s}.churn .cgrid i:nth-child(3){animation-delay:.24s}
+.churn .cgrid i:nth-child(6){animation-delay:.36s}.churn .cgrid i:nth-child(9){animation-delay:.48s}.churn .cgrid i:nth-child(8){animation-delay:.6s}
+.churn .cgrid i:nth-child(7){animation-delay:.72s}.churn .cgrid i:nth-child(4){animation-delay:.84s}.churn .cgrid i:nth-child(5){animation-delay:.96s}
+@keyframes churn{0%,100%{opacity:.15}45%{opacity:1}}
+.churn .ctext{font-size:11.5px;font-weight:500;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,var(--ink-3) 20%,var(--ink) 50%,var(--ink-3) 80%);
+background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:shimmer 2.4s linear infinite}
+@keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+.churn.stale .cgrid i{animation:none;opacity:.9;background:var(--red)}
+.churn.stale .ctext{background:none;-webkit-text-fill-color:var(--red);color:var(--red);animation:none;font-weight:600}
+@media(prefers-reduced-motion:reduce){.churn .cgrid i,.churn .ctext{animation:none}}
+.chart-stage{position:relative}
+.chart-cursor{position:absolute;width:1px;background:var(--ink);opacity:.26;display:none;pointer-events:none}
+.chart-tip{position:absolute;top:10px;display:none;pointer-events:none;flex-direction:column;gap:3px;background:var(--tooltip-bg);
+background:color-mix(in oklab,var(--tooltip-bg) 80%,transparent);-webkit-backdrop-filter:blur(8px) saturate(1.15);backdrop-filter:blur(8px) saturate(1.15);
+color:var(--tooltip-fg);border:1px solid var(--tooltip-border);border-radius:8px;padding:5px 9px;font-size:11.5px;white-space:nowrap;z-index:5;
+font-variant-numeric:tabular-nums;max-width:calc(100% - 12px);box-shadow:0 0 0 1px var(--tooltip-border),0 8px 28px oklch(0 0 0/.28)}
+.chart-tip .tt-t{color:var(--tooltip-muted);font-size:10.5px}.chart-tip .tt-i{display:inline-flex;align-items:center;gap:6px;min-width:0;max-width:100%}
+.chart-tip .tt-l{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.chart-tip .tt-i b{flex:0 0 auto}
+.chart-tip .tt-d{width:8px;height:8px;border-radius:50%;flex:0 0 8px}.chart-tip b{font-weight:600;margin-left:2px}
+.pill .dot{width:7px;height:7px}.p-green{background:var(--green-tint);color:var(--green)}.p-red{background:var(--red-tint);color:var(--red)}
+.p-orange{background:var(--orange-tint);color:var(--orange)}.p-accent{background:var(--accent-tint);color:var(--accent-ink)}.p-field{background:var(--field);color:var(--ink-2)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex:0 0 auto;background:currentColor}
+section{padding:26px 0;border-bottom:1px dashed var(--line-strong)}section:last-of-type{border-bottom:0}
+.sh{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;flex-wrap:wrap}.sh .num{font-family:var(--mono);font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.sh h2{font-size:13px;font-weight:600;margin:0;white-space:nowrap}.sh .cnt{font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}.sh .desc{font-size:12.5px;color:var(--ink-3)}
+.lede{font-size:12.5px;line-height:1.65;color:var(--ink-2);margin:0 0 10px;max-width:720px}.lede b{font-weight:500;color:var(--ink)}.lede .dot{vertical-align:middle;margin-right:5px;width:9px;height:9px}
+.card{background:var(--surface);border-radius:var(--radius-card);padding:12px;box-shadow:var(--shadow-hairline)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr));gap:12px 16px}
+.stat .l{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ink-2)}.stat .n{display:block;font-size:17px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums;margin-top:1px}
+.stat .s{font-size:11px;color:var(--ink-3)}.c-green{color:var(--green)}.c-red{color:var(--red)}.c-accent{color:var(--accent-ink)}.c-orange{color:var(--orange)}.c-ink{color:var(--ink)}
+.inset{margin-top:10px;background:var(--inset);border-radius:var(--radius-control);box-shadow:var(--shadow-hairline);overflow:hidden}
+.inset .hd{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border-bottom:1px solid var(--line);font-size:11px;color:var(--ink-3)}
+.inset .hd .tag{background:var(--field);border-radius:999px;padding:2px 8px;font-size:10.5px;font-weight:500;color:var(--ink-2)}
+.inset .r{display:flex;justify-content:space-between;gap:12px;padding:6px 10px;font-size:12px;color:var(--ink-2);border-bottom:1px solid var(--line)}.inset .r:last-child{border-bottom:0}
+.mono{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.rows{display:flex;flex-direction:column;gap:8px}
+.row{background:var(--surface);border-radius:var(--radius-card);box-shadow:var(--shadow-card);overflow:hidden;transition:background-color .2s}
+.row[open],.row:hover{background:var(--inset)}
+.row summary{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:9px 12px;cursor:pointer;list-style:none}
+.row summary::-webkit-details-marker{display:none}.row summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.ic{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;flex:0 0 22px;font-size:12px;font-weight:600;color:#fff}
+.i-green{background:var(--green)}.i-red{background:var(--red)}.i-orange{background:var(--orange)}.i-accent{background:var(--accent)}.i-field{background:var(--field);color:var(--ink-3)}
+.lead{display:flex;align-items:flex-start;gap:10px;flex:1 1 300px;min-width:0}.ic{margin-top:1px}
+.body{flex:1 1 auto;min-width:0}.title{display:block;font-size:13px;font-weight:500;color:var(--ink);line-height:1.35;text-decoration:none}
+a.title:hover,a.title:focus-visible{color:var(--accent-ink);text-decoration:underline;text-underline-offset:3px}.title .ext{color:var(--ink-3);font-size:11px;margin-left:4px}
+.title .strike{margin-left:6px;font-size:11px;font-weight:500;color:var(--ink-2);background:var(--field);border-radius:6px;padding:1px 6px;vertical-align:1px;white-space:nowrap}
+.expl{display:block;font-size:12.5px;color:var(--ink-2);margin-top:2px;line-height:1.45}
+.tick{font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap}.tick b{color:var(--ink-2);font-weight:500}
+.chev{color:var(--ink-3);flex:0 0 auto;transition:transform .2s;font-size:11px}.row[open] .chev{transform:rotate(180deg)}
+.detail{display:grid;grid-template-columns:22px 1fr;gap:10px;padding:0 12px 12px}.rail{width:1px;background:var(--line-strong);margin:0 auto}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;font-size:12px;align-content:start}.kv .k{color:var(--ink-3)}.kv .v{color:var(--ink-2);min-width:0;overflow-wrap:anywhere}
+.empty{background:var(--surface);border-radius:var(--radius-card);box-shadow:var(--shadow-hairline);padding:14px;font-size:12.5px;color:var(--ink-3);font-style:italic}
+.chart{padding:8px 8px 4px;overflow-x:auto}.stat .n.big{font-size:22px}
+.chart-wrap .rrow{display:flex;gap:6px;flex-wrap:wrap;padding:2px 2px 8px}
+.rchip{font:inherit;font-size:11px;font-weight:550;letter-spacing:.01em;line-height:1;color:var(--ink-2);background:var(--surface);
+border:1px solid var(--line);border-radius:999px;padding:5px 10px;cursor:pointer;transition:color .15s,background .15s,border-color .15s}
+.rchip:hover{color:var(--ink);border-color:var(--ink-3)}
+.rchip.on{background:var(--accent-tint);color:var(--accent-ink);border-color:transparent;font-weight:600}
+.rchip:disabled{opacity:.38;cursor:default}.rchip:disabled:hover{color:var(--ink-2);border-color:var(--line)}
+.chart-pane[hidden]{display:none}
+.al-up{color:var(--green)}.al-down{color:var(--red)}.al-mut{color:var(--ink-3)}
+.r .lts{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.about{background:var(--surface);border-radius:var(--radius-card);box-shadow:var(--shadow-card);overflow:hidden}
+.about>summary{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:12px 14px;cursor:pointer;list-style:none;font-size:13px;font-weight:600}
+.about>summary::-webkit-details-marker{display:none}.about>summary>span:first-child{white-space:nowrap}
+.about>summary .tl{font-weight:400;color:var(--ink-2);font-size:12.5px;flex:1 1 280px;min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.about>summary .tick{width:auto;white-space:normal}.about>summary .chev{margin-left:auto}.about[open]>summary .chev{transform:rotate(180deg)}
+@media(max-width:640px){.about>summary .tl{flex-basis:100%;order:4}.about>summary .tick{order:5;width:100%}}
+.abody{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:10px;padding:0 14px 14px}
+.ab{background:var(--inset);border-radius:var(--radius-control);box-shadow:var(--shadow-hairline);padding:10px 12px;font-size:12.5px;line-height:1.55;color:var(--ink-2)}
+.ab h3{font-size:11.5px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em;margin:0 0 5px}.ab b{color:var(--ink);font-weight:500}
+.ab p{margin:0 0 6px}.ab p:last-child{margin:0}.ab code{font-family:var(--mono);font-size:11px;background:var(--field);border-radius:4px;padding:1px 4px;color:var(--ink)}
+.ab.wide{grid-column:1/-1}.ab.note{background:var(--accent-tint)}.ab.note h3{color:var(--accent-ink)}
+.foot{margin-top:28px;font-size:11.5px;color:var(--ink-3);line-height:1.6}.foot a{color:var(--accent-ink);text-decoration:none}
+@media(max-width:640px){.page{padding:20px 14px 40px}.live{align-items:flex-start}.meta{text-align:left}.tick{order:5;width:100%}}
+.inst{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}.inst a{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:11.5px;font-weight:500;color:var(--ink-2);background:var(--field);text-decoration:none}.inst a:hover{color:var(--ink);background:var(--hover)}.inst a.cur{background:var(--accent-tint);color:var(--accent-ink)}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:12px}.hubcard{background:var(--surface);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:14px;display:flex;flex-direction:column;gap:8px;transition:transform .16s ease-out,box-shadow .16s ease-out}.hubcard:hover{transform:translateY(-1px);box-shadow:var(--shadow-raised,0 0 0 1px var(--line-strong),0 2px 10px oklch(0 0 0/.12))}.hubcard h2{font-size:14px;margin:0}.hubcard h2 a{color:var(--ink);text-decoration:none}.hubcard h2 a:hover{color:var(--accent-ink);text-decoration:underline;text-underline-offset:3px}.hubcard .d{font-size:12.5px;color:var(--ink-2);line-height:1.5}.hubcard .kv{display:grid;grid-template-columns:max-content 1fr;gap:3px 12px;font-size:12px}.hubcard .kv .k{color:var(--ink-3)}.hubcard .kv .v{color:var(--ink);font-variant-numeric:tabular-nums}.hubcard .age{font-size:11.5px;color:var(--ink-3)}.hubcard .age.stale{color:var(--red);font-weight:600}</style><script>(function(){try{var t=localStorage.getItem('pm-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script></head><body><div class="page"><header class="top"><div><h1>Ladder watch <span class="ext" style="font-weight:400;font-size:12px">measurement logger</span></h1><p class="sub">Measurement-only: watches every multi-leg event for strike-ladder mispricing — legs whose YES asks sum above $1 — and logs each opportunity&#x27;s size, per-leg book depth, persistence, and whether the ladder looks genuinely mutually exclusive. No orders, simulated or otherwise.</p></div><div class="live"><span class="churn" id="livepill"><span class="cgrid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="ctext" id="age">churning</span></span><span class="theme" id="themectl"><button data-set="">Auto</button><button data-set="light">Light</button><button data-set="dark">Dark</button></span><span class="meta">updated <span id="upd" data-ts="1787618035">2026-08-25 00:33:55Z</span> · cycle <b>1</b> · page refreshes every 60 s</span></div></header><nav class="inst"><a href="index.html">Hub</a><a href="sleeve-a.html">Sleeve A</a><a href="sleeve-a-uncapped.html">Sleeve A · uncapped control</a><a href="sleeve-a-14d.html">Sleeve A · 14-day horizon</a><a href="two-sided.html">Two-sided maker</a><a href="cross-venue.html">Kalshi ↔ Polymarket</a><a href="ladder-watch.html" class="cur">Ladder watch</a><a href="sleeve-c-9599.html">Sleeve C · 95–99¢ near-certainty maker</a><a href="sleeve-d-spread.html">Sleeve D · wide-spread favorites</a></nav><section><div class="sh"><h2>Basket stream</h2><span class="desc">277 multi-leg events scanned last cycle.</span></div><div class="card"><div class="stats"><div class="stat"><span class="l"><span class="dot c-green"></span>Plausible baskets logged</span><span class="n c-ink">24</span><span class="s">24 distinct events with mids summing ≈ 1 and sum(ask) ≥ $1.02</span></div><div class="stat"><span class="l"><span class="dot c-orange"></span>Cumulative ladders skipped</span><span class="n c-ink">110</span><span class="s">last cycle — threshold ladders sum above $1 by construction; counted, never logged</span></div><div class="stat"><span class="l"><span class="dot c-accent"></span>Best margin seen</span><span class="n c-ink">+43.0¢</span><span class="s">sum of YES asks minus $1, before fees</span></div><div class="stat"><span class="l"><span class="dot c-green"></span>Best net floor</span><span class="n c-ink">+43.0¢</span><span class="s">margin minus maker fees on a plausible basket — the contractual floor IF every leg fills</span></div></div><div class="inset"><div class="hd"><span>Flagged baskets</span><span class="tag">newest first · ◆ plausible · ◇ cumulative-suspect</span></div><div class="rows"><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxtruthsocial/kxtruthsocial/kxtruthsocial-26aug29/kxtruthsocial-26aug29-t240" target="_blank" rel="noopener">KXTRUTHSOCIAL-26AUG29</a> — 9 legs · sum(ask) 1.150 · mids sum 1.10 (plausible) · thinnest leg 101 contracts</span><span class="mono">floor +15.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxcbdisrael/kxcbdisrael/kxcbdisrael-26aug31/kxcbdisrael-26aug31-hold" target="_blank" rel="noopener">KXCBDISRAEL-26AUG31</a> — 3 legs · sum(ask) 1.100 · mids sum 1.04 (plausible) · thinnest leg 11 contracts</span><span class="mono">floor +10.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxtopmodel/kxtopmodel/kxtopmodel-26aug31/kxtopmodel-26aug31-claut" target="_blank" rel="noopener">KXTOPMODEL-26AUG31</a> — 3 legs · sum(ask) 1.050 · mids sum 0.98 (plausible) · thinnest leg 15 contracts</span><span class="mono">floor +5.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxhormuzmax/kxhormuzmax/kxhormuzmax-26aug30/kxhormuzmax-26aug30-aug30" target="_blank" rel="noopener">KXHORMUZMAX-26AUG30</a> — 7 legs · sum(ask) 1.290 · mids sum 0.97 (plausible) · thinnest leg 100 contracts</span><span class="mono">floor +29.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxtrumpnumstates/kxtrumpnumstates/kxtrumpnumstates-26sep01/kxtrumpnumstates-26sep01-al9" target="_blank" rel="noopener">KXTRUMPNUMSTATES-26SEP01</a> — 4 legs · sum(ask) 1.270 · mids sum 1.14 (plausible) · thinnest leg 1 contracts</span><span class="mono">floor +27.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxbillscount/kxbillscount/kxbillscount-26aug/kxbillscount-26aug-4.0" target="_blank" rel="noopener">KXBILLSCOUNT-26AUG</a> — 4 legs · sum(ask) 1.030 · mids sum 1.01 (plausible) · thinnest leg 2 contracts</span><span class="mono">floor +3.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxdcgolfvisitcount/kxdcgolfvisitcount/kxdcgolfvisitcount-26aug/kxdcgolfvisitcount-26aug-4" target="_blank" rel="noopener">KXDCGOLFVISITCOUNT-26AUG</a> — 4 legs · sum(ask) 1.060 · mids sum 0.98 (plausible) · thinnest leg 2 contracts</span><span class="mono">floor +6.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxpardonstrump/kxpardonstrump/kxpardonstrump-26aug/kxpardonstrump-26aug-62" target="_blank" rel="noopener">KXPARDONSTRUMP-26AUG</a> — 8 legs · sum(ask) 1.260 · mids sum 1.00 (plausible) · thinnest leg 2 contracts</span><span class="mono">floor +26.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxcbdecisionnz/kxcbdecisionnz/kxcbdecisionnz-26sep01/kxcbdecisionnz-26sep01-hold" target="_blank" rel="noopener">KXCBDECISIONNZ-26SEP01</a> — 5 legs · sum(ask) 1.060 · mids sum 1.01 (plausible) · thinnest leg 2 contracts</span><span class="mono">floor +6.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxcbdecisioneu/kxcbdecisioneu/kxcbdecisioneu-26sep10/kxcbdecisioneu-26sep10-hold" target="_blank" rel="noopener">KXCBDECISIONEU-26SEP10</a> — 4 legs · sum(ask) 1.070 · mids sum 1.01 (plausible) · thinnest leg 2 contracts</span><span class="mono">floor +7.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxcbdecisionrussia/kxcbdecisionrussia/kxcbdecisionrussia-26sep11/kxcbdecisionrussia-26sep11-hold" target="_blank" rel="noopener">KXCBDECISIONRUSSIA-26SEP11</a> — 7 legs · sum(ask) 1.190 · mids sum 1.08 (plausible) · thinnest leg 2 contracts</span><span class="mono">floor +19.0¢</span></div><div class="r"><span><span class="al-up">◆</span> <span class="lts" data-ts="1787618036">2026-08-25 00:33:55Z</span> · <a class="ext" href="https://kalshi.com/markets/kxcpicombo/kxcpicombo/kxcpicombo-26aug/kxcpicombo-26aug-0503" target="_blank" rel="noopener">KXCPICOMBO-26AUG</a> — 10 legs · sum(ask) 1.360 · mids sum 1.03 (plausible) · thinnest leg 2 contracts</span><span class="mono">floor +36.0¢</span></div></div></div></div></section><section><div class="sh"><h2>About this experiment</h2></div><div class="card"><div class="inset"><div class="r"><span>From the 2026-08-24 research sweep: NO-baskets on exclusivity-verified ladders at sum(ask)&gt;=1.05 validated at +5.3%/basket [CI +0.5,+11.0] with a contractual floor — but only ~9 baskets/month, and the floor assumes every leg fills as a maker, which no backtest can verify. This logger measures the live stream (frequency, depth, persistence, exclusivity) so a trading mode, if ever built, starts from data instead of hope.</span></div></div></div></section><p class="foot">Measurement instrument, not investment advice. This logger never places orders, simulated or otherwise.</p><p class="foot">Public mirror: each page is regenerated on the source machine every 5 minutes and republished here every 10 minutes, so it can run up to ~12 minutes behind. Code and ledgers are private.</p></div><script>
+(function(){var e=document.getElementById('upd'),a=document.getElementById('age'),p=document.getElementById('livepill');if(!e||!a||!p)return;
+var t=+e.getAttribute('data-ts')*1000;function f(){var s=Math.max(0,Math.round((Date.now()-t)/1000)),m=Math.floor(s/60),h=Math.floor(m/60);
+var txt=(h?h+'h '+(m%60)+'m':m?m+'m '+(s%60)+'s':s+'s')+' ago';
+if(s>1800){a.textContent='stale \u00b7 no cycle in 15 min \u2014 is the logger running?';p.classList.add('stale');}
+else{a.textContent='churning \u00b7 updated '+txt;p.classList.remove('stale');}}f();setInterval(f,1000);})();
+function fmtLocalTs(ts){try{return new Date(ts*1000).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}catch(e){return ''+ts;}}
+(function(){var ax=document.querySelectorAll('text.axl[data-ts]');
+for(var i=0;i<ax.length;i++){var t=+ax[i].getAttribute('data-ts');if(t)ax[i].textContent=fmtLocalTs(t);}
+var ls=document.querySelectorAll('.lts[data-ts]');
+for(var j=0;j<ls.length;j++){var u=+ls[j].getAttribute('data-ts');if(u)ls[j].textContent=fmtLocalTs(u);}})();
+(function(){function bind(st){var svg=st.querySelector('svg'),cur=st.querySelector('.chart-cursor'),tip=st.querySelector('.chart-tip');
+if(!svg||!cur||!tip)return;var pts,lines;try{pts=JSON.parse(st.getAttribute('data-points')||'[]');lines=JSON.parse(st.getAttribute('data-lines')||'[]');}catch(err){return;}
+if(!pts.length)return;
+var x0=+st.getAttribute('data-x0')||0,x1=+st.getAttribute('data-x1')||1e9,y0=+st.getAttribute('data-y0')||0,y1=+st.getAttribute('data-y1')||1e9;
+function vb(ev){var m=svg.getScreenCTM();if(!m)return null;var q=svg.createSVGPoint();q.x=ev.clientX;q.y=ev.clientY;return q.matrixTransform(m.inverse());}
+function px(vx,vy){var m=svg.getScreenCTM(),q=svg.createSVGPoint();q.x=vx;q.y=vy;var o=q.matrixTransform(m),r=st.getBoundingClientRect();return{x:o.x-r.left,y:o.y-r.top};}
+function hide(){cur.style.display='none';tip.style.display='none';}
+st.addEventListener('mousemove',function(ev){var q=vb(ev);
+if(!q||q.x<x0-1||q.x>x1+1||q.y<y0-2||q.y>y1+2){hide();return;}
+var best=pts[0],bd=1e9;for(var i=0;i<pts.length;i++){var d=Math.abs(pts[i][0]-q.x);if(d<bd){bd=d;best=pts[i];}}
+var a=px(best[0],y0),b=px(best[0],y1);
+cur.style.left=a.x+'px';cur.style.top=a.y+'px';cur.style.height=(b.y-a.y)+'px';cur.style.display='block';
+var h='<span class="tt-t">'+fmtLocalTs(best[1])+'</span>';
+for(var j=0;j<lines.length;j++){if(best[2][j]!=null){h+='<span class="tt-i"><span class="tt-d" style="background:'+lines[j][1]+'"></span><span class="tt-l">'+lines[j][0]+'</span><b>'+best[2][j]+'</b></span>';}}
+tip.innerHTML=h;tip.style.display='flex';tip.style.right='auto';tip.style.top=(a.y+4)+'px';
+var r=st.getBoundingClientRect(),tw=tip.offsetWidth,l=a.x>r.width/2?a.x-10-tw:a.x+10;
+tip.style.left=Math.max(2,Math.min(l,r.width-tw-2))+'px';});
+st.addEventListener('mouseleave',hide);}
+var els=document.querySelectorAll('.chart-stage');for(var k=0;k<els.length;k++)bind(els[k]);})();
+(function(){var KEY='pm-chart-range';
+function apply(w,rr){var i,ps=w.querySelectorAll('.chart-pane'),cs=w.querySelectorAll('.rchip');
+for(i=0;i<ps.length;i++){ps[i].hidden=ps[i].getAttribute('data-range')!==rr;}
+for(i=0;i<cs.length;i++){cs[i].classList.toggle('on',cs[i].getAttribute('data-range')===rr);}}
+var saved=null;try{saved=localStorage.getItem(KEY);}catch(e){}
+var ws=document.querySelectorAll('.chart-wrap');
+for(var k=0;k<ws.length;k++){(function(w){var r=saved,c=r&&w.querySelector('.rchip[data-range="'+r+'"]');
+if(!c||c.disabled||!w.querySelector('.chart-pane[data-range="'+r+'"]'))r='all';
+apply(w,r);
+w.addEventListener('click',function(ev){var b=ev.target&&ev.target.closest?ev.target.closest('.rchip'):null;
+if(!b||b.disabled)return;var rr=b.getAttribute('data-range');apply(w,rr);try{localStorage.setItem(KEY,rr);}catch(e){}});})(ws[k]);}})();
+
+(function(){var c=document.getElementById('themectl');if(!c)return;var bs=c.querySelectorAll('button');
+function apply(v){if(v==='dark'||v==='light'){document.documentElement.setAttribute('data-theme',v);}else{document.documentElement.removeAttribute('data-theme');}
+for(var i=0;i<bs.length;i++){bs[i].className=bs[i].getAttribute('data-set')===v?'on':'';}}
+for(var i=0;i<bs.length;i++){(function(b){b.addEventListener('click',function(){var v=b.getAttribute('data-set');
+try{if(v){localStorage.setItem('pm-theme',v);}else{localStorage.removeItem('pm-theme');}}catch(e){}apply(v);});})(bs[i]);}
+var cur='';try{cur=localStorage.getItem('pm-theme')||''}catch(e){}apply(cur);})();
+</script></body></html>
